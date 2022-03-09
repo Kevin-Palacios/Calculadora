@@ -24,10 +24,10 @@ function crear(){
             if(n_col==j+1){
                 HTML += "<td align=center>"+'<input type="text" id="x'+i+'_'+j+'" onkeypress="return valideKey(event, this);" style="width: 80px;" > </td>';
             }else if(parseInt(n_col,10)-2==j){
-                HTML += "<td align=center>"+'<input type="text" id="x'+i+'_'+j+'" onkeypress="return valideKey(event, this);" style="width: 80px;" ></td><td>x'+n_j+'=</td>';
+                HTML += "<td align=center>"+'<input type="text" id="x'+i+'_'+j+'" onkeypress="return valideKey(event, this);" style="width: 80px;" ></td><td>x<sub>'+n_j+'</sub>=</td>';
 
             }else{
-                HTML += "<td align=center>"+'<input type="text" id="x'+i+'_'+j+'" onkeypress="return valideKey(event, this);" style="width: 80px;"></td><td>x'+n_j+'+</td>';
+                HTML += "<td align=center>"+'<input type="text" id="x'+i+'_'+j+'" onkeypress="return valideKey(event, this);" style="width: 80px;"></td><td>x<sub>'+n_j+'</sub>+</td>';
             }
             
         }
@@ -194,9 +194,9 @@ function operacion(matriz, i, j, n_col, pivote){
     }
 
     if(pivote%1==0 || pivote%.1==0 || pivote%.01==0 || pivote%.001==0|| pivote%.0001==0){
-        mensaje="(1/"+pivote+")(F"+posicion+")→F"+posicion;
+        mensaje="(1/"+pivote+")(F<sub>"+posicion+"</sub>)→F<sub>"+posicion+"</sub>";
     }else{
-        mensaje="(1/"+parseFloat(pivote).toFixed(2)+")(F"+posicion+")→F"+posicion;
+        mensaje="(1/"+parseFloat(pivote).toFixed(2)+")(F<sub>"+posicion+"</sub>)→F<sub>"+posicion+"</sub>";
     }
 
     
@@ -217,9 +217,9 @@ function operacion(matriz, i, j, n_col, pivote){
         }
         posicion2 = parseInt(m, 10)+1;
         if(n_pivote%1==0 || n_pivote%.1==0 || n_pivote%.01==0 || n_pivote%.001==0|| n_pivote%.0001==0){
-            mensaje="F"+posicion2+"-("+n_pivote+")(F"+posicion+")→F"+posicion2;
+            mensaje="F<sub>"+posicion2+"</sub>-("+n_pivote+")(F<sub>"+posicion+"</sub>)→F<sub>"+posicion2+"</sub>";
         }else{
-            mensaje="F"+posicion2+"-("+parseFloat(n_pivote).toFixed(4)+")(F"+posicion+")→F"+posicion2;
+            mensaje="F<sub>"+posicion2+"</sub>-("+parseFloat(n_pivote).toFixed(4)+")(F<sub>"+posicion+"</sub>)→F<sub>"+posicion2+"</sub>";
         }
         
         imprimir(matriz, mensaje);
@@ -262,7 +262,7 @@ function ordenar(matriz, i, j, n_col){
         matriz[num_fila][r] = auxiliar[r];
     }
     posicion2 = parseInt(num_fila, 10)+1;
-    mensaje="F"+posicion+"↔F"+posicion2;
+    mensaje="F<sub>"+posicion+"</sub>↔F<sub>"+posicion2+"</sub>";
     imprimir(matriz, mensaje);
 
     return matriz;
@@ -297,9 +297,9 @@ function operacionAtras(matriz, i, j, n_col, pivote){
 
         posicion2 = parseInt(m, 10)+1;
         if(n_pivote%1==0 || n_pivote%.1==0 || n_pivote%.01==0 || n_pivote%.001==0|| n_pivote%.0001==0){
-            mensaje="F"+posicion2+"-("+n_pivote+")(F"+posicion+")→F"+posicion2;
+            mensaje="F<sub>"+posicion2+"</sub>-("+n_pivote+")(F<sub>"+posicion+"</sub>)→F<sub>"+posicion2+"</sub>";
         }else{
-            mensaje="F"+posicion2+"-("+parseFloat(n_pivote).toFixed(4)+")(F"+posicion+")→F"+posicion2;
+            mensaje="F<sub>"+posicion2+"</sub>-("+parseFloat(n_pivote).toFixed(4)+")(F<sub>"+posicion+"</sub>)→F<sub>"+posicion2+"</sub>";
         }
         
         imprimir(matriz, mensaje);
@@ -328,7 +328,7 @@ function eliminarFilas(matriz, n_col,){
             if (contador==matriz[i].length) {
                 matriz.splice(i, 1);
                 posicion= parseInt(i, 10)+1;
-                mensaje ="Se eliminó F"+posicion;
+                mensaje ="Se eliminó F<sub>"+posicion+"</sub>";
                 imprimir(matriz, mensaje);
 
                 i=0;
@@ -402,6 +402,7 @@ function imprimirResultados(matriz, n_col){
     
     var suma = "";
     var imprimirresultadoFinal = document.getElementById('Resultados3');
+    //document.getElementById('Resultados2').innerHTML="El sistema tiene soluciones infinitas <br><br>";
     var rango;
     var lamnda = "";
     
@@ -415,24 +416,26 @@ function imprimirResultados(matriz, n_col){
         resultadoFinal += "<tr>";
         for(j=0; j<matriz[i].length-1; j++){
             if(matriz[i][j]==1){
+                document.getElementById('Resultados2').innerHTML="El sistema tiene solución única <br><br>";
                 for(k=(j+1), m=(matriz[i].length-i); k<matriz[i].length-1; k++, m--){
                     if(matriz[i][k]==0){
                         suma=suma+"";
                     }else{
+                        document.getElementById('Resultados2').innerHTML="El sistema tiene soluciones infinitas <br><br>";
                         if(matriz[i][k]>0){
-                            suma=suma+((-1)*(matriz[i][k]))+" &lambda;"+(m)+" ";
+                            suma=suma+((-1)*(matriz[i][k]))+" &lambda;<sub>"+(m)+"</sub> ";
                         }else{
-                            suma=suma+" + "+((-1)*(matriz[i][k]))+" &lambda;"+(m)+" ";
+                            suma=suma+" + "+((-1)*(matriz[i][k]))+" &lambda;<sub>"+(m)+"</sub> ";
                         }
                         
                     }
 
                     if(i==matriz.length-1){
-                        lamnda += '<tr><td align=center>x'+(k+1)+"=  &lambda;"+m+'</td>'
+                        lamnda += '<tr><td align=center>x<sub>'+(k+1)+"</sub>=  &lambda;<sub>"+m+'</sub></td>'
                     }
                     
                 }
-                resultadoFinal += '<td align=center>x'+(i+1)+"="+matriz[i][matriz[i].length-1]+" "+suma+'</td>';
+                resultadoFinal += '<td align=center>x<sub>'+(i+1)+"</sub>="+matriz[i][matriz[i].length-1]+" "+suma+'</td>';
                 
             }
             suma="";   
